@@ -1,5 +1,6 @@
-from ..base import *
 import json
+
+from ..base import *
 
 
 class GuildObject:
@@ -18,8 +19,8 @@ class GuildObject:
 class Guild:
     def __init__(self, payload):
         self.payload = payload
-        self.id = int(payload["id"])
-        self.name = payload["name"]
+        self.id = int(payload.get("id"))
+        self.name = payload.get("name")
         self.icon_hash = payload.get("icon")
         self.is_owner = payload.get("owner")
         self.permissions_value = payload.get("permissions")

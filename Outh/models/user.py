@@ -1,17 +1,18 @@
 from ..base import *
 
+
 class User:
     def __init__(self, payload):
-        self.id = int(payload['id'])
-        self.name = payload['username']
-        self.discriminator = int(payload['discriminator'])
-        self.email = payload['email']
-        self.verified = payload['verified']
-        self.locale = payload['locale']
-        self.public_flags = payload['public_flags']
-        self.flags = payload['flags']
-        self.avatar_hash = payload['avatar']
-        self.mfa_enabled = payload['mfa_enabled']
+        self.id = int(payload.get('id'))
+        self.name = payload.get('username')
+        self.discriminator = int(payload.get('discriminator'))
+        self.email = payload.get('email')
+        self.verified = payload.get('verified')
+        self.locale = payload.get('locale')
+        self.public_flags = payload.get('public_flags')
+        self.flags = payload.get('flags')
+        self.avatar_hash = payload.get('avatar')
+        self.mfa_enabled = payload.get('mfa_enabled')
 
     @property
     def is_avatar_animated(self):

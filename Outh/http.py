@@ -1,12 +1,13 @@
-import requests
-import urllib.parse
-from flask import request
-from .exceptions import *
-from .base import *
 import json
-from .models.user import User
+import urllib.parse
+
+import requests
+from flask import request, session
+
+from .base import *
+from .exceptions import *
 from .models.guild import Guild
-from flask import session
+from .models.user import User
 
 
 class AioClient:
