@@ -24,11 +24,15 @@ class Guild:
         self.icon_hash = payload.get("icon")
         self.is_owner = payload.get("owner")
         self.permissions_value = payload.get("permissions")
+        # print(self.name, self.permissions_value)
         self.features = payload.get('features')
 
     def __repr__(self):
         data = json.dumps(self.payload)
         return str(json.loads(data, object_hook=lambda x: GuildObject(**x)))
+
+    def is_owner_of_guild(self):
+        return bool(self.is_owner or (self.permissions_value & 0x8) == 0x8)
 
     @property
     def icon_url(self):

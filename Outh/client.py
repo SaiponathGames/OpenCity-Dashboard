@@ -24,7 +24,7 @@ class DiscordOauth2Client(object):
         return self.MyClient.fetch_user()
 
     def fetch_guilds(self):
-        return tuple(self.MyClient.fetch_guilds())
+        return self.MyClient.fetch_guilds()
 
     def create_session(self):
         return redirect(self.redirect_url)

@@ -1,4 +1,4 @@
-from flask import Flask, redirect, render_template, url_for
+from flask import Flask, redirect, render_template, render_template_string, url_for
 
 from Outh import DiscordOauth2Client
 
@@ -23,9 +23,13 @@ def login():
     return client.create_session()
 
 
+def return_guild_names_owner(guilds_):
+    return list(sorted([fetch_guild.name for fetch_guild in guilds_ if fetch_guild.is_owner_of_guild()]))
+
+
 @app.route('/guilds')
 def guilds():
-    return client.fetch_guilds()
+    return render_template('html/guilds.html', guild_names=return_guild_names_owner(client.fetch_guilds()))
 
 
 @app.route('/callback')
@@ -38,17 +42,20 @@ def callback():
 def me():
     user = client.fetch_user()
     image = user.avatar_url
-    return f"""
-    <html>
-    <body>
-    <img src="{image}">
-    </body>
-    </html>"""
+    # noinspection HtmlUnknownTarget
+    return render_template_string("""
+    <html lang="en">
+        <body>
+            <p>Login Successful</p>
+            <img src="{{ image_url }}" alt="Avatar url">
+        </body>
+    </html>
+    """, image_url=image)
 
 
 @app.route('/loggedin')
 def logged_in():
-    return render_template("html/loggedin.html")
+    return render_template("html/loggedin.html", name=client.fetch_user().name)
 
 
 if __name__ == '__main__':
