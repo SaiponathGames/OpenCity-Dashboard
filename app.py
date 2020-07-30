@@ -1,4 +1,4 @@
-from flask import Flask, redirect, render_template, render_template_string, url_for
+from flask import Flask, redirect, render_template, render_template_string, request, url_for
 
 from Outh import DiscordOauth2Client
 
@@ -14,8 +14,8 @@ client = DiscordOauth2Client(app)
 
 
 @app.route('/')
-def hello_world():
-    return render_template("html/index.html")
+def index():
+    return render_template("html/index.html", logined=request.args.get('logged_in'), user_name=client.fetch_user().name)
 
 
 @app.route('/login/', methods=['GET'])
@@ -27,15 +27,22 @@ def return_guild_names_owner(guilds_):
     return list(sorted([fetch_guild.name for fetch_guild in guilds_ if fetch_guild.is_owner_of_guild()]))
 
 
+def search_guilds_for_name(guilds_, query):
+    # print(list(sorted([fetch_guild.name for fetch_guild in guilds_ if fetch_guild.is_owner_of_guild() and fetch_guild.name == query])))
+    return list(sorted([fetch_guild.name for fetch_guild in guilds_ if fetch_guild.is_owner_of_guild() and fetch_guild.name == query]))
+
+
 @app.route('/guilds')
 def guilds():
+    if request.args.get('guild_name'):
+        return render_template('html/guilds.html', guild_names=search_guilds_for_name(client.fetch_guilds(), request.args.get('guild_name')))
     return render_template('html/guilds.html', guild_names=return_guild_names_owner(client.fetch_guilds()))
 
 
 @app.route('/callback')
 def callback():
     client.callback()
-    return redirect(url_for('me'))
+    return redirect(url_for('index', logged_in=True))
 
 
 @app.route('/me')

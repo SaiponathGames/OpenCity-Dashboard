@@ -8,9 +8,14 @@
     <link rel="shortcut icon" href="#"/>
 </head>
 <body>
-<h1 id="test">Hello World!</h1>
-<button><a
-        href="{{ url_for('login') }}">Login</a>
-</button>
+<h1 id="test">Hello {{ user_name if user_name else 'World' }}!</h1>
+
+{% if not logined %}
+    <button onclick="location.href = `{{ url_for('login') }}`">Login</button>
+{% else %}
+    <p>{{ user_name }}</p>
+{% endif %}
+
+
 </body>
 </html>
