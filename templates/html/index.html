@@ -4,16 +4,22 @@
     <meta charset="UTF-8">
     <title>OpenCity-Dashboard</title>
     <script src="/static/js/index.js"></script>
+    <script src="/static/js/cookie.js"></script>
+    <script>
+
+    </script>
     <link rel="stylesheet" href="/static/css/index.css">
     <link rel="shortcut icon" href="#"/>
 </head>
 <body>
-<h1 id="test">Hello {{ user_name if user_name else 'World' }}!</h1>
+<h1 id="test">Hello{{ ' ' + (user_name if user_name else 'World') }}!</h1>
 
 {% if not logined %}
     <button onclick="location.href = `{{ url_for('login') }}`">Login</button>
 {% else %}
-    <p>{{ user_name }}</p>
+    <button onclick="{% set value = session.pop('DISCORD_OAUTH2_STATE') %} {% set value_1 = session.pop('DISCORD_OAUTH2_TOKEN') %} location.href = `{{ url_for('index') }}`">
+        Logout
+    </button>
 {% endif %}
 
 

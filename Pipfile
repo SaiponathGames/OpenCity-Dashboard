@@ -9,6 +9,8 @@ verify_ssl = true
 flask = "*"
 gunicorn = "*"
 requests = "*"
+flask-discord = "*"
+requests-oauthlib = "*"
 
 [requires]
 python_version = "3.8"

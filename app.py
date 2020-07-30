@@ -4,11 +4,11 @@ from Outh import DiscordOauth2Client, Unauthorized
 
 app = Flask(__name__)
 app.secret_key = b"random bytes representing flask secret key"
-app.config['Client_ID'] = 651420362940088336
-app.config['Client_Secret'] = '0-_AhUL6Y01qCnMpsp6GTdf0UCVxxCTu'
-app.config['Scopes'] = ['identify', 'guilds']
-app.config['Redirect_Url'] = 'https://localhost:5000/'
-app.config['Bot_Token'] = None
+app.config['DISCORD_CLIENT_ID'] = 651420362940088336
+app.config['DISCORD_CLIENT_SECRET'] = '0-_AhUL6Y01qCnMpsp6GTdf0UCVxxCTu'
+app.config['SCOPES'] = ['identify', 'guilds']
+app.config['DISCORD_REDIRECT_URI'] = 'http://127.0.0.1:5000/callback'
+app.config['DISCORD_BOT_TOKEN'] = None
 
 client = DiscordOauth2Client(app)
 
@@ -16,7 +16,7 @@ client = DiscordOauth2Client(app)
 @app.route('/')
 def index():
     try:
-        return render_template("html/index.html", logined=request.args.get('logged_in'), user_name=client.fetch_user().name)
+        return render_template("html/index.html", logined='access_token', user_name=client.fetch_user().name)
     except Unauthorized:
         return render_template("html/index.html", logined=request.args.get('logged_in'))
 
@@ -45,27 +45,35 @@ def guilds():
 @app.route('/callback')
 def callback():
     client.callback()
-    return redirect(url_for('index', logged_in=True))
+    return redirect(url_for('index'))
 
 
 @app.route('/me')
+@client.is_logged_in
 def me():
     user = client.fetch_user()
     image = user.avatar_url
     # noinspection HtmlUnknownTarget
     return render_template_string("""
-    <html lang="en">
-        <body>
-            <p>Login Successful</p>
-            <img src="{{ image_url }}" alt="Avatar url">
-        </body>
-    </html>
-    """, image_url=image)
+        <html lang="en">
+            <body>
+                <p>Login Successful</p>
+                <img src="{{ image_url }}" alt="Avatar url">
+            </body>
+        </html>
+        """, image_url=image)
 
 
 @app.route('/loggedin')
+@client.is_logged_in
 def logged_in():
     return render_template("html/loggedin.html", name=client.fetch_user().name)
+
+
+@app.errorhandler(401)
+def unauthorized_exception(error):
+    print(error)
+    return redirect(url_for('login'))
 
 
 if __name__ == '__main__':
