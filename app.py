@@ -1,3 +1,5 @@
+import os
+
 from flask import Flask, redirect, render_template, render_template_string, request, url_for
 
 from Outh import DiscordOauth2Client, Unauthorized
@@ -7,7 +9,7 @@ app.secret_key = b"random bytes representing flask secret key"
 app.config['DISCORD_CLIENT_ID'] = 651420362940088336
 app.config['DISCORD_CLIENT_SECRET'] = '0-_AhUL6Y01qCnMpsp6GTdf0UCVxxCTu'
 app.config['SCOPES'] = ['identify', 'guilds']
-app.config['DISCORD_REDIRECT_URI'] = 'http://127.0.0.1:5000/callback'
+app.config['DISCORD_REDIRECT_URI'] = os.getenv('REDIRECT_URL') or 'http://127.0.0.1:5000/callback'
 app.config['DISCORD_BOT_TOKEN'] = None
 
 client = DiscordOauth2Client(app)
