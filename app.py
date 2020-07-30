@@ -1,6 +1,6 @@
 from flask import Flask, redirect, render_template, render_template_string, request, url_for
 
-from Outh import DiscordOauth2Client
+from Outh import DiscordOauth2Client, Unauthorized
 
 app = Flask(__name__)
 app.secret_key = b"random bytes representing flask secret key"
@@ -15,7 +15,10 @@ client = DiscordOauth2Client(app)
 
 @app.route('/')
 def index():
-    return render_template("html/index.html", logined=request.args.get('logged_in'), user_name=client.fetch_user().name)
+    try:
+        return render_template("html/index.html", logined=request.args.get('logged_in'), user_name=client.fetch_user().name)
+    except Unauthorized:
+        return render_template("html/index.html", logined=request.args.get('logged_in'))
 
 
 @app.route('/login/', methods=['GET'])
