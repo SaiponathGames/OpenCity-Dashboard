@@ -1,4 +1,4 @@
-DISCORD_API_BASE_URL = "https://discordapp.com/api/v6"
+DISCORD_API_BASE_URL = "https://discordapp.com/api/v7"
 
 DISCORD_AUTHORIZATION_BASE_URL = DISCORD_API_BASE_URL + "/oauth2/authorize"
 DISCORD_TOKEN_URL = DISCORD_API_BASE_URL + "/oauth2/token"

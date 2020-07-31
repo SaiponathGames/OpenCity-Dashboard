@@ -17,9 +17,7 @@
 {% if not logined %}
     <button onclick="location.href = `{{ url_for('login') }}`">Login</button>
 {% else %}
-    <button onclick="{% set value = session.pop('DISCORD_OAUTH2_STATE') %} {% set value_1 = session.pop('DISCORD_OAUTH2_TOKEN') %} location.href = `{{ url_for('index') }}`">
-        Logout
-    </button>
+    <button onclick="location.href = `{{ url_for('logout') }}`">Logout</button>
 {% endif %}
 
 

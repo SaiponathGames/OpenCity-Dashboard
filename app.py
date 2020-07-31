@@ -17,6 +17,7 @@ client = DiscordOauth2Client(app)
 
 @app.route('/')
 def index():
+    # print(session)
     try:
         return render_template("html/index.html", logined='access_token', user_name=client.fetch_user().name)
     except Unauthorized:
@@ -70,6 +71,13 @@ def me():
 @client.is_logged_in
 def logged_in():
     return render_template("html/loggedin.html", name=client.fetch_user().name)
+
+
+@app.route('/logout', methods=['GET'])
+@client.is_logged_in
+def logout():
+    client.logout()
+    return redirect(url_for('index'))
 
 
 @app.errorhandler(401)
