@@ -1,25 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>OpenCity-Dashboard</title>
-    <script src="/static/js/index.js"></script>
-    <script src="/static/js/cookie.js"></script>
-    <script>
-
-    </script>
+{% extends "html/base.html" %}
+{% block title %}OpenCity-Dashboard{% endblock %}
+{% block stylesheets %}
     <link rel="stylesheet" href="/static/css/index.css">
-    <link rel="shortcut icon" href="#"/>
-</head>
-<body>
-<h1 id="test">Hello{{ ' ' + (user_name if user_name else 'World') }}!</h1>
+    <script src="/static/js/index.js"></script>
+{% endblock %}
+{% block user_name %}
+    {{ user_name_1 }}
+{% endblock %}
+{% block content %}
+    <h1 id="test">Hello{{ ' ' + (user_name_1 if user_name_1 else 'World') }}!</h1>
 
-{% if not logined %}
-    <button onclick="location.href = `{{ url_for('login') }}`">Login</button>
-{% else %}
-    <button onclick="location.href = `{{ url_for('logout') }}`">Logout</button>
-{% endif %}
+    {#    {% if not logined %}#}
+    {#        <button onclick="location.href = `{{ url_for('login') }}`">Login</button>#}
+    {#    {% else %}#}
+    {#        <button onclick="location.href = `{{ url_for('logout') }}`">Logout</button>#}
+    {#    {% endif %}#}
 
-
-</body>
-</html>
+{% endblock %}

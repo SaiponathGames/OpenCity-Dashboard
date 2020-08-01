@@ -1,17 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Guilds</title>
-</head>
-<body>
-<h1>Your guilds: </h1>
-<ol>
-    {% for guild_name in guild_names %}
-        <li>{{ guild_name }}</li>
-    {% endfor %}
+{% extends "html/base.html" %}
+{% block title %}Guilds{% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="/static/css/guilds.css">
+{% endblock %}
+{% block user_name %}
+    {{ user_name_1 }}
+{% endblock %}
+{% block content %}
+    <div id="guilds">
+        <form action="" method="post">
+            <label>
+                <input id="input_1" name="guild_name" type="text"
+                       placeholder="Want to search for in guilds? Search here." value="{{ guild_name if guild_name }}">
+            </label>
+            {#            <button name="submit" value="submit">Submit</button>#}
+        </form>
+        <h1>Your guilds: </h1>
+        <ol>
+            {% for guild_name in guild_names %}
+                <li>{{ guild_name }}</li>
+            {% endfor %}
 
-</ol>
-
-</body>
-</html>
+        </ol>
+    </div>
+{% endblock %}
