@@ -6,7 +6,7 @@ from flask import Flask, redirect, render_template, render_template_string, requ
 
 from Outh import DiscordOauth2Client, Unauthorized
 
-__version__ = '0.6.1'
+__version__ = '0.6.2'
 version = __version__
 
 app = Flask(__name__)

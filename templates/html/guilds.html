@@ -16,12 +16,23 @@
             </div>
             {#            <button name="submit" value="submit">Submit</button>#}
         </form>
-        <ol>
-            {% for guild_name in guild_names %}
-                <li>{{ guild_name }}</li>
-            {% endfor %}
+        {% set guild_name = request.form['guild_name'] %}
+        {% if guild_names %}
+            {% if guild_name %}
+                <p> Found {{ guild_names|length }} guild{{ 's' if guild_names|length > 1 else '' }} with
+                    name {{ guild_name }}.</p>
+            {% else %}
+                <p> You're a admin or owner in {{ guild_names|length }} guilds.</p>
+            {% endif %}
+            <ol>
+                {% for guild_name in guild_names %}
+                    <li>{{ guild_name }}</li>
+                {% endfor %}
+            </ol>
 
-        </ol>
+        {% else %}
+            <p>No guild with name {{ guild_name }} found.</p>
+        {% endif %}
     </div>
 {% endblock %}
 {% block version %}
