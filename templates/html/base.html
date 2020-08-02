@@ -7,7 +7,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3pro.css">
-    <link rel="icon" href="#">
+    <link rel="stylesheet" href="/static/css/base.css">
+    <link rel="icon" href="/static/img/OpenCity_Icon_pngcrush.png">
     {% block stylesheets %}{% endblock %}
 </head>
 <body>
@@ -15,11 +16,12 @@
     <a href="{{ url_for('index') }}" class="w3-bar-item w3-button">Home</a>
     {% if session.get("DISCORD_OAUTH2_TOKEN") %}
         <div class="w3-dropdown-hover w3-right">
-            <button class="w3-button" style="width: 50%; right: 1%"><img class="w3-circle" src="{{ avatar_url }}"
-                                                                         alt="Avatar url"
-                                                                         style="width: 16.5%">{% block user_name %}{% endblock %}
-                <i class="fa fa-caret-down"></i></button>
-            <div class="w3-dropdown-content w3-bar-block w3-card-4">
+            <button id="user_name_button-1" class="w3-button w3-clear">
+                <img id="avatar-user-url-button" class="w3-circle" src="{{ avatar_url }}" alt="Avatar url"/>
+                {{ user_name_1 }}
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="w3-dropdown-content w3-bar-block w3-card-4" style="right:0">
                 <a href="{{ url_for('guilds') }}" class="w3-bar-item w3-button">Guilds</a>
                 <a href="{{ url_for('me') }}" class="w3-bar-item w3-button">Me</a>
                 <a href="{{ url_for('logout') }}" class="w3-bar-item w3-button">Logout</a>
@@ -30,7 +32,14 @@
     {% endif %}
 </div>
 
+
 {% block content %}
 {% endblock %}
+
+<footer class="w3-bar w3-light-grey footer"><p>&nbsp;&nbsp;&nbsp;&nbsp;&copy; 2020 OpenCityBot Dashboard <span
+        class="w3-right">Latest Version:&nbsp;{% block version %}{% endblock %}&nbsp;&nbsp;</span></p>
+    <p class="w3-center">Built by Sairam and Naman, Built with W3.CSS</p>
+</footer>
+
 </body>
 </html>

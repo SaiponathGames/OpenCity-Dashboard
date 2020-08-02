@@ -4,9 +4,6 @@
     <link rel="stylesheet" href="/static/css/index.css">
     <script src="/static/js/index.js"></script>
 {% endblock %}
-{% block user_name %}
-    {{ user_name_1 }}
-{% endblock %}
 {% block content %}
     <h1 id="test">Hello{{ ' ' + (user_name_1 if user_name_1 else 'World') }}!</h1>
 
@@ -16,4 +13,7 @@
     {#        <button onclick="location.href = `{{ url_for('logout') }}`">Logout</button>#}
     {#    {% endif %}#}
 
+{% endblock %}
+{% block version %}
+    {{ version_1 }}
 {% endblock %}

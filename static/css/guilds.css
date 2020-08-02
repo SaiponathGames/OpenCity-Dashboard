@@ -1,7 +1,5 @@
 #guilds {
     padding-left: 45px;
-}
-
-#input_1 {
-    width: 350px;
+    padding-bottom: 100px;
+    overflow: auto;
 }

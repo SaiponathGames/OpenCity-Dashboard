@@ -3,19 +3,19 @@
 {% block stylesheets %}
     <link rel="stylesheet" href="/static/css/guilds.css">
 {% endblock %}
-{% block user_name %}
-    {{ user_name_1 }}
-{% endblock %}
 {% block content %}
-    <div id="guilds">
+    <div id="guilds" class="w3-container">
+        <h1>Your guilds: </h1>
         <form action="" method="post">
-            <label>
-                <input id="input_1" name="guild_name" type="text"
-                       placeholder="Want to search for in guilds? Search here." value="{{ guild_name if guild_name }}">
-            </label>
+            <div class="w3-container">
+                <label>
+                    <input id="input_1" name="guild_name" type="text" class="w3-input w3-medium"
+                           placeholder="Want to search for in guilds? Search here."
+                           value="{{ guild_name if guild_name }}">
+                </label>
+            </div>
             {#            <button name="submit" value="submit">Submit</button>#}
         </form>
-        <h1>Your guilds: </h1>
         <ol>
             {% for guild_name in guild_names %}
                 <li>{{ guild_name }}</li>
@@ -23,4 +23,7 @@
 
         </ol>
     </div>
+{% endblock %}
+{% block version %}
+    {{ version_1 }}
 {% endblock %}

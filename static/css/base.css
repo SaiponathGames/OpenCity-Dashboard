@@ -1,0 +1,15 @@
+#user_name_button-1 {
+    width: 175px;
+    position: initial;
+}
+
+#avatar-user-url-button {
+    width: 16.8%;
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    overflow: auto;
+}
