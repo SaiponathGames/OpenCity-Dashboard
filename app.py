@@ -6,7 +6,7 @@ from flask import Flask, redirect, render_template, render_template_string, requ
 
 from Outh import DiscordOauth2Client, Unauthorized
 
-__version__ = '0.6.0'
+__version__ = '0.6.1'
 version = __version__
 
 app = Flask(__name__)
@@ -96,7 +96,7 @@ def logout():
 @app.route('/home')
 @app.route('/index')
 def index_or_home():
-    return redirect('index')
+    return redirect(url_for('index'))
 
 
 if __name__ == '__main__':
