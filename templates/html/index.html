@@ -3,6 +3,8 @@
 {% block stylesheets %}
     <link rel="stylesheet" href="/static/css/index.css">
     <script src="/static/js/index.js"></script>
+    {#    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">#}
+    {#    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">#}
 {% endblock %}
 {% block content %}
     <h1 id="test">Hello{{ ' ' + (user_name_1 if user_name_1 else 'World') }}!</h1>
@@ -13,6 +15,13 @@
     {#        <button onclick="location.href = `{{ url_for('logout') }}`">Logout</button>#}
     {#    {% endif %}#}
 
+    {% for text in texts %}
+        <div class="w3-container">
+            <h1> {{ text.title }}</h1>
+            <p class="w3-text"> {{ text.description }} </p>
+            <button class="w3-button w3-light-blue"> {{ text.button_name }} </button>
+        </div>
+    {% endfor %}
 {% endblock %}
 {% block version %}
     {{ version_1 }}

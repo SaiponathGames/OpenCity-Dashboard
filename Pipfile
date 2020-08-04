@@ -11,6 +11,9 @@ gunicorn = "*"
 requests = "*"
 flask-discord = "*"
 requests-oauthlib = "*"
+flask-sqlalchemy = "*"
+psycopg2 = "*"
+flask-migrate = "*"
 
 [requires]
 python_version = "3.8"

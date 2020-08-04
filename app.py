@@ -3,10 +3,12 @@ import random
 import string
 
 from flask import Flask, redirect, render_template, render_template_string, request, url_for
+from flask_migrate import Migrate
+from flask_sqlalchemy import SQLAlchemy
 
 from Outh import DiscordOauth2Client, Unauthorized
 
-__version__ = '0.6.2'
+__version__ = '0.7.0-alpha'
 version = __version__
 
 app = Flask(__name__)
@@ -16,17 +18,40 @@ app.config['DISCORD_CLIENT_SECRET'] = '0-_AhUL6Y01qCnMpsp6GTdf0UCVxxCTu'
 app.config['SCOPES'] = ['identify', 'guilds']
 app.config['DISCORD_REDIRECT_URI'] = os.getenv('REDIRECT_URL') or 'http://127.0.0.1:5000/callback'
 app.config['DISCORD_BOT_TOKEN'] = None
+app.config['CSRF_ENABLED'] = True
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:1234@localhost:5858/Flask-Database-for-Dashboard-Test'
+
+# app.register_blueprint(admin.admin)
 
 client = DiscordOauth2Client(app)
+db = SQLAlchemy(app)
+migrate = Migrate(app, db)
+
+from models import Text_For_Indexes
+
+
+# from admin import admin
+# app.register_blueprint(admin.admin)
 
 
 @app.route('/')
 def index():
     # print(session)
+    tfi_s = [Text_For_Indexes("Add to your server!",
+                              "Hello there, I am OpenCityBot, I do levels, gatekeeper, reaction roles and much more, I have a custom leveling role set based leveling roles, which gives so much abilities to use our advanced leveling system. Please visit our docs for more info.",
+                              "Add to your server."),
+             Text_For_Indexes("Want to know more? See Features",
+                              "I have so much of features running, if you check the features, you'll get your jaw-opened, as I am a high quality bot, you don't need other bots, I can manage everything. From Leveling to Fun commands, I can manage everything you want.",
+                              "See features"),
+             Text_For_Indexes("About my developers!",
+                              """My developers made me a high quality bot, and also my developers made me OpenSource so you can see the code <a href="https://github.com/sairam4123/OpenCityBot-MovingJSON-PostGreSQL">here</a>.""",
+                              "Learn more")]
     try:
-        return render_template("html/index.html", logined='access_token', user_name_1=client.fetch_user().name, avatar_url=client.fetch_user().avatar_url, version_1=version)
+        return render_template("html/index.html", texts=tfi_s, logined='access_token', user_name_1=client.fetch_user().name, avatar_url=client.fetch_user().avatar_url,
+                               version_1=version)
     except Unauthorized:
-        return render_template("html/index.html", logined=request.args.get('logged_in'), version_1=version)
+        return render_template("html/index.html", texts=tfi_s, logined=request.args.get('logged_in'), version_1=version)
 
 
 @app.route('/login/', methods=['GET'])
