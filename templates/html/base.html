@@ -13,7 +13,9 @@
 </head>
 <body>
 <div class="w3-bar w3-light-grey w3-large">
+    <a href="{{ url_for('index') }}" class="w3-bar-item w3-button">OpenCity-Bot</a>
     <a href="{{ url_for('index') }}" class="w3-bar-item w3-button">Home</a>
+    <a href="{{ url_for('features') }}" class="w3-bar-item w3-button">Features</a>
     {% if session.get("DISCORD_OAUTH2_TOKEN") %}
         <div class="w3-dropdown-hover w3-right">
             <button id="user_name_button-1" class="w3-button w3-clear">

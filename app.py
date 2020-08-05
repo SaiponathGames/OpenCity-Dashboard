@@ -2,13 +2,13 @@ import os
 import random
 import string
 
-from flask import Flask, redirect, render_template, render_template_string, request, url_for
+from flask import Flask, Markup, redirect, render_template, render_template_string, request, url_for
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 
 from Outh import DiscordOauth2Client, Unauthorized
 
-__version__ = '0.7.0-alpha'
+__version__ = '0.7.0-alpha.1'
 version = __version__
 
 app = Flask(__name__)
@@ -28,8 +28,6 @@ client = DiscordOauth2Client(app)
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
-from models import Text_For_Indexes
-
 
 # from admin import admin
 # app.register_blueprint(admin.admin)
@@ -37,15 +35,17 @@ from models import Text_For_Indexes
 
 @app.route('/')
 def index():
+    from models import Text_For_Indexes
     # print(session)
     tfi_s = [Text_For_Indexes("Add to your server!",
                               "Hello there, I am OpenCityBot, I do levels, gatekeeper, reaction roles and much more, I have a custom leveling role set based leveling roles, which gives so much abilities to use our advanced leveling system. Please visit our docs for more info.",
                               "Add to your server."),
              Text_For_Indexes("Want to know more? See Features",
-                              "I have so much of features running, if you check the features, you'll get your jaw-opened, as I am a high quality bot, you don't need other bots, I can manage everything. From Leveling to Fun commands, I can manage everything you want.",
+                              "I have so much of features running, if you check my {}, you'll get your jaw-opened, as I am a high quality bot, you don't need other bots, I can manage everything. From Leveling to Fun commands, I can manage everything you want.".format(
+                                  Markup("<a href=\"https://github.com/sairam4123/OpenCityBot-MovingJSON-PostGreSQL\">here</a>.")),
                               "See features"),
              Text_For_Indexes("About my developers!",
-                              """My developers made me a high quality bot, and also my developers made me OpenSource so you can see the code <a href="https://github.com/sairam4123/OpenCityBot-MovingJSON-PostGreSQL">here</a>.""",
+                              "My developers made me a high quality bot, and also my developers made me OpenSource so you can see the code <a href=\"https://github.com/sairam4123/OpenCityBot-MovingJSON-PostGreSQL\">here</a>.",
                               "Learn more")]
     try:
         return render_template("html/index.html", texts=tfi_s, logined='access_token', user_name_1=client.fetch_user().name, avatar_url=client.fetch_user().avatar_url,
@@ -72,6 +72,7 @@ def search_guilds_for_name(guilds_, query):
 @client.is_logged_in()
 def guilds():
     if request.method == "POST":
+        # noinspection PyCompatibility
         if guild_name := request.form['guild_name']:
             return render_template('html/guilds.html', guild_names=search_guilds_for_name(client.fetch_guilds(), guild_name), user_name_1=client.fetch_user().name,
                                    avatar_url=client.fetch_user().avatar_url, version_1=version)
@@ -122,6 +123,11 @@ def logout():
 @app.route('/index')
 def index_or_home():
     return redirect(url_for('index'))
+
+
+@app.route('/features')
+def features():
+    return "WIP Sorry...."
 
 
 if __name__ == '__main__':

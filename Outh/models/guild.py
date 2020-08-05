@@ -32,7 +32,8 @@ class Guild:
         return str(json.loads(data, object_hook=lambda x: GuildObject(**x)))
 
     def is_owner_of_guild(self):
-        return bool(self.is_owner or (self.permissions_value & 0x8) == 0x8)
+        return bool(
+            self.is_owner or ((self.permissions_value & 0x8) == 0x8) or ((self.permissions_value & 0x20) == 0x20) or (self.permissions_value & (0x8 | 0x20)) == (0x8 | 0x20))
 
     @property
     def icon_url(self):

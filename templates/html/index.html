@@ -18,8 +18,8 @@
     {% for text in texts %}
         <div class="w3-container">
             <h1> {{ text.title }}</h1>
-            <p class="w3-text"> {{ text.description }} </p>
-            <button class="w3-button w3-light-blue"> {{ text.button_name }} </button>
+            <p> {{ text.description }} </p>
+            <button class="w3-button w3-blue"> {{ text.button_name }} </button>
         </div>
     {% endfor %}
 {% endblock %}
