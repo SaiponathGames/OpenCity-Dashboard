@@ -14,3 +14,9 @@ class Text_For_Indexes:
         self.title = title
         self.description = description
         self.button_name = button_name
+
+
+class Features:
+    def __init__(self, title, description):
+        self.title = title
+        self.description = description

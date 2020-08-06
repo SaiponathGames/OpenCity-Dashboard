@@ -1,0 +1,18 @@
+{% extends 'html/base.html' %}
+{% block title %}Features{% endblock %}
+{% block stylesheets %}
+    <link href="/static/css/features.css">
+{% endblock %}
+{% block content %}
+    <div class="w3-container">
+        <p>Working in progress....
+            <button onclick="history.back()">Go Back</button>
+        </p>
+
+        {% for feature in features %}
+            <h2>{{ feature.title }}</h2>
+            <p>{{ feature.description }}</p>
+        {% endfor %}
+    </div>
+
+{% endblock %}

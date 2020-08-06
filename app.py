@@ -9,7 +9,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 from Outh import DiscordOauth2Client, Unauthorized
 
-__version__ = '0.7.0'
+__version__ = '0.8.0-alpha'
 version = __version__
 
 from jinja2 import Template
@@ -139,7 +139,13 @@ def index_or_home():
 
 @app.route('/features')
 def features():
-    return "WIP Sorry...."
+    from models import Features
+    fts = [Features("Leveling", "I have a best featured leveling system"),
+           Features("Moderation", "My developers are working day and night to implement a good moderation system on me.")]
+    try:
+        return render_template('html/features.html', features=fts, user=client.fetch_user(), version_1=version)
+    except Unauthorized:
+        return render_template('html/features.html', features=fts, version_1=version)
 
 
 @app.route('/this-does-nothing')

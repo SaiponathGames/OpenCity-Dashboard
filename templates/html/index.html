@@ -22,7 +22,7 @@
     <p> {{ text.description.format(formatter[0])|inner_render({"url_for": url_for}) }} </p>
     {% endautoescape %}
     <button onclick="location.href = `{{ button_link|inner_render({"url_for": url_for}) }}`"
-            class="w3-button w3-blue"> {{ text.button_name }} </button>
+            class="w3-hover-light-blue w3-blue w3-button"> {{ text.button_name }} </button>
 </div>
 {% endfor %}
 {% endblock %}
