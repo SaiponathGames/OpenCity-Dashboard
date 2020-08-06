@@ -9,19 +9,22 @@
 {% block content %}
     <h1 id="test">Hello{{ ' ' + (user_name_1 if user_name_1 else 'World') }}!</h1>
 
-    {#    {% if not logined %}#}
-    {#        <button onclick="location.href = `{{ url_for('login') }}`">Login</button>#}
-    {#    {% else %}#}
-    {#        <button onclick="location.href = `{{ url_for('logout') }}`">Logout</button>#}
-    {#    {% endif %}#}
+{#    {% if not logined %}#}
+{#        <button onclick="location.href = `{{ url_for('login') }}`">Login</button>#}
+{#    {% else %}#}
+{#        <button onclick="location.href = `{{ url_for('logout') }}`">Logout</button>#}
+{#    {% endif %}#}
 
-    {% for text in texts %}
-        <div class="w3-container">
-            <h1> {{ text.title }}</h1>
-            <p> {{ text.description }} </p>
-            <button class="w3-button w3-blue"> {{ text.button_name }} </button>
-        </div>
-    {% endfor %}
+{% for text, formatter, button_link in texts|zip(formatters, button_links, fillvalue='') %}
+<div class="w3-container">
+    <h1> {{ text.title }}</h1>
+    {% autoescape off %}
+    <p> {{ text.description.format(formatter[0])|inner_render({"url_for": url_for}) }} </p>
+    {% endautoescape %}
+    <button onclick="location.href = `{{ button_link|inner_render({"url_for": url_for}) }}`"
+            class="w3-button w3-blue"> {{ text.button_name }} </button>
+</div>
+{% endfor %}
 {% endblock %}
 {% block version %}
     {{ version_1 }}

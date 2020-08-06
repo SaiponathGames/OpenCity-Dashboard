@@ -1,3 +1,4 @@
+import itertools
 import os
 import random
 import string
@@ -8,10 +9,19 @@ from flask_sqlalchemy import SQLAlchemy
 
 from Outh import DiscordOauth2Client, Unauthorized
 
-__version__ = '0.7.0-alpha.1'
+__version__ = '0.7.0-beta'
 version = __version__
 
+from jinja2 import Template
+
 app = Flask(__name__)
+
+
+@app.template_filter()
+def inner_render(value, context):
+    return Template(value).render(context)
+
+
 app.secret_key = "".join([random.choice(string.ascii_letters + string.digits + string.punctuation) for _ in range(1000)])
 app.config['DISCORD_CLIENT_ID'] = 651420362940088336
 app.config['DISCORD_CLIENT_SECRET'] = '0-_AhUL6Y01qCnMpsp6GTdf0UCVxxCTu'
@@ -21,6 +31,8 @@ app.config['DISCORD_BOT_TOKEN'] = None
 app.config['CSRF_ENABLED'] = True
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:1234@localhost:5858/Flask-Database-for-Dashboard-Test'
+app.jinja_env.filters['zip'] = itertools.zip_longest
+app.jinja_env.filters['inner_render'] = inner_render
 
 # app.register_blueprint(admin.admin)
 
@@ -41,17 +53,21 @@ def index():
                               "Hello there, I am OpenCityBot, I do levels, gatekeeper, reaction roles and much more, I have a custom leveling role set based leveling roles, which gives so much abilities to use our advanced leveling system. Please visit our docs for more info.",
                               "Add to your server."),
              Text_For_Indexes("Want to know more? See Features",
-                              "I have so much of features running, if you check my {}, you'll get your jaw-opened, as I am a high quality bot, you don't need other bots, I can manage everything. From Leveling to Fun commands, I can manage everything you want.".format(
-                                  Markup("<a href=\"https://github.com/sairam4123/OpenCityBot-MovingJSON-PostGreSQL\">here</a>.")),
+                              "I have so much of features running, if you check my {}, you'll get your jaw-opened, as I am a high quality bot, you don't need other bots, I can manage everything. From Leveling to Fun commands, I can manage everything you want.",
                               "See features"),
              Text_For_Indexes("About my developers!",
-                              "My developers made me a high quality bot, and also my developers made me OpenSource so you can see the code <a href=\"https://github.com/sairam4123/OpenCityBot-MovingJSON-PostGreSQL\">here</a>.",
+                              "My developers made me a high quality bot, and also my developers made me OpenSource so you can see the code {}.",
                               "Learn more")]
+    formatters = [[""], [Markup("<a href={{ url_for('features') }}>features</a>")], ['<a href="https://github.com/sairam4123/OpenCityBot-MovingJSON-PostGreSQL">here</a>']]
+    button_links = ["https://discord.com/api/oauth2/authorize?client_id=693401671836893235&permissions=8&scope=bot", "{{ url_for('features') }}",
+                    "{{ url_for('this_does_nothing') }}"]
     try:
-        return render_template("html/index.html", texts=tfi_s, logined='access_token', user_name_1=client.fetch_user().name, avatar_url=client.fetch_user().avatar_url,
+        return render_template("html/index.html", text_formatter_button_links=tfi_s, formatters=formatters, button_links=button_links, logined='access_token',
+                               user_name_1=client.fetch_user().name,
+                               avatar_url=client.fetch_user().avatar_url,
                                version_1=version)
     except Unauthorized:
-        return render_template("html/index.html", texts=tfi_s, logined=request.args.get('logged_in'), version_1=version)
+        return render_template("html/index.html", texts=tfi_s, formatters=formatters, button_links=button_links, logined=request.args.get('logged_in'), version_1=version)
 
 
 @app.route('/login/', methods=['GET'])
@@ -128,6 +144,11 @@ def index_or_home():
 @app.route('/features')
 def features():
     return "WIP Sorry...."
+
+
+@app.route('/this-does-nothing')
+def this_does_nothing():
+    return "Really, this does nothing!, LOL"
 
 
 if __name__ == '__main__':
