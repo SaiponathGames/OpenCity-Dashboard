@@ -9,7 +9,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 from Outh import DiscordOauth2Client, Unauthorized
 
-__version__ = '0.7.0-beta'
+__version__ = '0.7.0-beta.1'
 version = __version__
 
 from jinja2 import Template
@@ -62,7 +62,7 @@ def index():
     button_links = ["https://discord.com/api/oauth2/authorize?client_id=693401671836893235&permissions=8&scope=bot", "{{ url_for('features') }}",
                     "{{ url_for('this_does_nothing') }}"]
     try:
-        return render_template("html/index.html", text_formatter_button_links=tfi_s, formatters=formatters, button_links=button_links, logined='access_token',
+        return render_template("html/index.html", texts=tfi_s, formatters=formatters, button_links=button_links, logined='access_token',
                                user_name_1=client.fetch_user().name,
                                avatar_url=client.fetch_user().avatar_url,
                                version_1=version)
