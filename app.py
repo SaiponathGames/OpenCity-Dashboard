@@ -9,7 +9,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 from Outh import DiscordOauth2Client, Unauthorized
 
-__version__ = '0.7.0-beta.1'
+__version__ = '0.7.0'
 version = __version__
 
 from jinja2 import Template
@@ -63,8 +63,7 @@ def index():
                     "{{ url_for('this_does_nothing') }}"]
     try:
         return render_template("html/index.html", texts=tfi_s, formatters=formatters, button_links=button_links, logined='access_token',
-                               user_name_1=client.fetch_user().name,
-                               avatar_url=client.fetch_user().avatar_url,
+                               user=client.fetch_user(),
                                version_1=version)
     except Unauthorized:
         return render_template("html/index.html", texts=tfi_s, formatters=formatters, button_links=button_links, logined=request.args.get('logged_in'), version_1=version)
@@ -90,13 +89,10 @@ def guilds():
     if request.method == "POST":
         # noinspection PyCompatibility
         if guild_name := request.form['guild_name']:
-            return render_template('html/guilds.html', guild_names=search_guilds_for_name(client.fetch_guilds(), guild_name), user_name_1=client.fetch_user().name,
-                                   avatar_url=client.fetch_user().avatar_url, version_1=version)
+            return render_template('html/guilds.html', guild_names=search_guilds_for_name(client.fetch_guilds(), guild_name), user=client.fetch_user(), version_1=version)
         else:
-            return render_template('html/guilds.html', guild_names=return_guild_names_owner(client.fetch_guilds()), user_name_1=client.fetch_user().name,
-                                   avatar_url=client.fetch_user().avatar_url, version_1=version)
-    return render_template('html/guilds.html', guild_names=return_guild_names_owner(client.fetch_guilds()), user_name_1=client.fetch_user().name,
-                           avatar_url=client.fetch_user().avatar_url, version_1=version)
+            return render_template('html/guilds.html', guild_names=return_guild_names_owner(client.fetch_guilds()), user=client.fetch_user(), version_1=version)
+    return render_template('html/guilds.html', guild_names=return_guild_names_owner(client.fetch_guilds()), user=client.fetch_user(), version_1=version)
 
 
 @app.route('/callback')
@@ -114,18 +110,18 @@ def me():
         {% extends "html/base.html" %}
         {% block title %}Me{% endblock %}
         {% block user_name %}
-        {{ user_name_1 }}
+        {{ user.name }}
         {% endblock %}
         {% block content %}
-        <img src="{{ image_url }}" alt="Avatar url">
+        <img src="{{ user.avatar_url }}" alt="Avatar url">
         {% endblock %}
-        """, image_url=image, user_name_1=client.fetch_user().name, avatar_url=client.fetch_user().avatar_url, version_1=version)
+        """, image_url=image, user=client.fetch_user(), version_1=version)
 
 
 @app.route('/loggedin')
 @client.is_logged_in()
 def logged_in():
-    return render_template("html/loggedin.html", name=client.fetch_user().name)
+    return render_template("html/loggedin.html", user=client.fetch_user())
 
 
 @app.route('/logout', methods=['GET'])

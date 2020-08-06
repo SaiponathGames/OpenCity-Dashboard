@@ -19,8 +19,8 @@
     {% if session.get("DISCORD_OAUTH2_TOKEN") %}
         <div class="w3-dropdown-hover w3-right">
             <button id="user_name_button-1" class="w3-button w3-clear">
-                <img id="avatar-user-url-button" class="w3-circle" src="{{ avatar_url }}" alt="Avatar url"/>
-                {{ user_name_1 }}
+                <img id="avatar-user-url-button" class="w3-circle" src="{{ user.avatar_url }}" alt="Avatar url"/>
+                {{ user.name }}
                 <i class="fa fa-caret-down"></i>
             </button>
             <div class="w3-dropdown-content w3-bar-block w3-card-4" style="right:0">
@@ -39,7 +39,7 @@
     {% endblock %}
 </div>
 <footer class="w3-bar w3-light-grey footer"><p>&nbsp;&nbsp;&nbsp;&nbsp;&copy; 2020 OpenCityBot Dashboard <span
-        class="w3-right">Latest Version:&nbsp;{% block version %}{% endblock %}&nbsp;&nbsp;</span></p>
+        class="w3-right">Latest Version:&nbsp;{{ version_1 }}&nbsp;&nbsp;</span></p>
     <p class="w3-center">Built by Sairam and Naman, Built with W3.CSS</p>
 </footer>
 

@@ -7,7 +7,7 @@
     {#    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">#}
 {% endblock %}
 {% block content %}
-    <h1 id="test">Hello{{ ' ' + (user_name_1 if user_name_1 else 'World') }}!</h1>
+<h1 id="test">Hello{{ ' ' + (user.name if user else 'World') }}!</h1>
 
 {#    {% if not logined %}#}
 {#        <button onclick="location.href = `{{ url_for('login') }}`">Login</button>#}
