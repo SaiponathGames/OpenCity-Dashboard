@@ -9,7 +9,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 from Outh import DiscordOauth2Client, Unauthorized
 
-__version__ = '0.8.0-alpha.1'
+__version__ = '0.8.0-alpha.2'
 version = __version__
 
 from jinja2 import Template
@@ -51,13 +51,13 @@ def index():
     from models import Text_For_Indexes
     # print(session)
     tfi_s = [Text_For_Indexes("Add to your server!",
-                              "Hello there, I am OpenCityBot, I do levels, gatekeeper, reaction roles and much more, I have a custom leveling role set based leveling roles, which gives so much abilities to use our advanced leveling system. Please visit our docs for more info.",
+                              "Hello there, I am OpenCityBot, I do levels, gatekeeper, reaction roles and much more. I have a custom leveling role set based leveling roles, which gives many abilities to configure our advanced leveling system. Please visit our docs for more info.",
                               "Add to your server."),
              Text_For_Indexes("Want to know more? See Features",
-                              "I am feature-rich bot, the number of my {} are jaw dropping, I can manage many things from Leveling to Fun commands, I can manage everything you want.",
+                              "I am a feature-rich bot, the number of my {} are jaw dropping, I can manage many things from Leveling to Fun commands, I can manage everything you want.",
                               "See features"),
              Text_For_Indexes("About my developers!",
-                              "My developers made me a high quality bot, and also my developers made me OpenSource so you can see the code {}.",
+                              "My developers made me an open source and high-quality bot. You can check out my code {}.",
                               "Learn more")]
     formatters = [[""], [Markup("<a href={{ url_for('features') }}>features</a>")], ['<a href="https://github.com/sairam4123/OpenCityBot-MovingJSON-PostGreSQL">here</a>']]
     button_links = ["https://discord.com/api/oauth2/authorize?client_id=693401671836893235&permissions=8&scope=bot", "{{ url_for('features') }}",
@@ -141,8 +141,9 @@ def index_or_home():
 @app.route('/features')
 def features():
     from models import Features
-    fts = [Features("Leveling", "I have a best featured leveling system"),
-           Features("Moderation", "My developers are working day and night to implement a good moderation system on me.")]
+    fts = [Features("Leveling", "I have a good featured leveling system. Please visit docs for more info."),
+           Features("Moderation", "My developers are working day and night to implement a good moderation system for me."),
+           Features("Auto-Moderator", "I can be a good moderator. If a raid is going on in your server, I can ban the raiders.")]
     try:
         return render_template('html/features.html', features=fts, user=client.fetch_user(), version_1=version)
     except Unauthorized:
