@@ -9,7 +9,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 from Outh import DiscordOauth2Client, Unauthorized
 
-__version__ = '0.8.0-alpha'
+__version__ = '0.8.0-alpha.1'
 version = __version__
 
 from jinja2 import Template
@@ -22,7 +22,7 @@ def inner_render(value, context):
     return Template(value).render(context)
 
 
-app.secret_key = "".join([random.choice(string.ascii_letters + string.digits + string.punctuation) for _ in range(1000)])
+app.secret_key = (os.urandom(1000) + "".join([random.choice(string.ascii_letters + string.digits + string.punctuation) for _ in range(10000)]).encode())
 app.config['DISCORD_CLIENT_ID'] = 651420362940088336
 app.config['DISCORD_CLIENT_SECRET'] = '0-_AhUL6Y01qCnMpsp6GTdf0UCVxxCTu'
 app.config['SCOPES'] = ['identify', 'guilds']
@@ -33,6 +33,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:1234@localhost:5858/Flask-Database-for-Dashboard-Test'
 app.jinja_env.filters['zip'] = itertools.zip_longest
 app.jinja_env.filters['inner_render'] = inner_render
+# print(app.secret_key)
 
 # app.register_blueprint(admin.admin)
 
@@ -53,7 +54,7 @@ def index():
                               "Hello there, I am OpenCityBot, I do levels, gatekeeper, reaction roles and much more, I have a custom leveling role set based leveling roles, which gives so much abilities to use our advanced leveling system. Please visit our docs for more info.",
                               "Add to your server."),
              Text_For_Indexes("Want to know more? See Features",
-                              "I have so much of features running, if you check my {}, you'll get your jaw-opened, as I am a high quality bot, you don't need other bots, I can manage everything. From Leveling to Fun commands, I can manage everything you want.",
+                              "I am feature-rich bot, the number of my {} are jaw dropping, I can manage many things from Leveling to Fun commands, I can manage everything you want.",
                               "See features"),
              Text_For_Indexes("About my developers!",
                               "My developers made me a high quality bot, and also my developers made me OpenSource so you can see the code {}.",
