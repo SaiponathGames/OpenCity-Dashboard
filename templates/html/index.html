@@ -21,11 +21,10 @@
     {% autoescape off %}
     <p> {{ text.description.format(formatter[0])|inner_render({"url_for": url_for}) }} </p>
     {% endautoescape %}
-    <button onclick="location.href = `{{ button_link|inner_render({"url_for": url_for}) }}`"
-            class="w3-hover-light-blue w3-blue w3-button"> {{ text.button_name }} </button>
+    <p>
+        <button onclick="location.href = `{{ button_link|inner_render({'url_for': url_for}) }}`"
+                class="w3-button w3-blue hover-color-light-blue"> {{ text.button_name }} </button>
+    </p>
 </div>
 {% endfor %}
-{% endblock %}
-{% block version %}
-    {{ version_1 }}
 {% endblock %}

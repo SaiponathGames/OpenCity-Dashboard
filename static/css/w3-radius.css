@@ -1,0 +1,95 @@
+.w3-round-top {
+    border-radius: 4px 4px 0 0
+}
+
+.w3-round-bottom {
+    border-radius: 0 0 4px 4px
+}
+
+.w3-round-right {
+    border-radius: 0 4px 4px 0
+}
+
+.w3-round-left {
+    border-radius: 4px 0 0 4px
+}
+
+.w3-round-top-small {
+    border-radius: 2px 2px 0 0
+}
+
+.w3-round-bottom-small {
+    border-radius: 0 0 2px 2px
+}
+
+.w3-round-right-small {
+    border-radius: 0 2px 2px 0
+}
+
+.w3-round-left-small {
+    border-radius: 2px 0 0 2px
+}
+
+.w3-round-top-medium {
+    border-radius: 4px 4px 0 0
+}
+
+.w3-round-bottom-medium {
+    border-radius: 0 0 4px 4px
+}
+
+.w3-round-right-medium {
+    border-radius: 0 4px 4px 0
+}
+
+.w3-round-left-medium {
+    border-radius: 4px 0 0 4px
+}
+
+.w3-round-top-large {
+    border-radius: 8px 8px 0 0
+}
+
+.w3-round-bottom-large {
+    border-radius: 0 0 8px 8px
+}
+
+.w3-round-right-large {
+    border-radius: 0 8px 8px 0
+}
+
+.w3-round-left-large {
+    border-radius: 8px 0 0 8px
+}
+
+.w3-round-top-xlarge {
+    border-radius: 16px 16px 0 0
+}
+
+.w3-round-bottom-xlarge {
+    border-radius: 0 0 16px 16px
+}
+
+.w3-round-right-xlarge {
+    border-radius: 0 16px 16px 0
+}
+
+.w3-round-left-xlarge {
+    border-radius: 16px 0 0 16px
+}
+
+.w3-round-top-xxlarge {
+    border-radius: 32px 32px 0 0
+}
+
+.w3-round-bottom-xxlarge {
+    border-radius: 0 0 32px 32px
+}
+
+.w3-round-right-xxlarge {
+    border-radius: 0 32px 32px 0
+}
+
+.w3-round-left-xxlarge {
+    border-radius: 32px 0 0 32px
+}

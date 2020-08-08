@@ -1,3 +1,7 @@
-#test{
+#test {
     color: #cb5f48
+}
+
+.hover-color-light-blue:hover {
+    background-color: darkblue !important;
 }

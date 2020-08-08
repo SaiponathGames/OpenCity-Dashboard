@@ -9,7 +9,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 from Outh import DiscordOauth2Client, Unauthorized
 
-__version__ = '0.8.0-alpha.2'
+__version__ = '0.8.0-beta'
 version = __version__
 
 from jinja2 import Template
@@ -33,6 +33,8 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:1234@localhost:5858/Flask-Database-for-Dashboard-Test'
 app.jinja_env.filters['zip'] = itertools.zip_longest
 app.jinja_env.filters['inner_render'] = inner_render
+app.jinja_env.filters['repeat'] = itertools.repeat
+
 # print(app.secret_key)
 
 # app.register_blueprint(admin.admin)
@@ -144,10 +146,12 @@ def features():
     fts = [Features("Leveling", "I have a good featured leveling system. Please visit docs for more info."),
            Features("Moderation", "My developers are working day and night to implement a good moderation system for me."),
            Features("Auto-Moderator", "I can be a good moderator. If a raid is going on in your server, I can ban the raiders.")]
+    fts_2 = list(itertools.chain.from_iterable(list(itertools.repeat(fts, 15))))
+    # print(fts_2)
     try:
-        return render_template('html/features.html', features=fts, user=client.fetch_user(), version_1=version)
+        return render_template('html/features.html', features=fts_2, user=client.fetch_user(), version_1=version)
     except Unauthorized:
-        return render_template('html/features.html', features=fts, version_1=version)
+        return render_template('html/features.html', features=fts_2, version_1=version)
 
 
 @app.route('/this-does-nothing')

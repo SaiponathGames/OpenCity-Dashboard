@@ -8,7 +8,8 @@
 }
 
 .body-container {
-    padding-bottom: 100px;
+    padding-top: 25px !important;
+    padding-bottom: 150px !important;
 }
 
 .footer {

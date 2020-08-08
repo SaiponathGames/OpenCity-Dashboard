@@ -8,11 +8,20 @@
         <p>Working in progress....
             <button onclick="history.back()">Go Back</button>
         </p>
-
-        {% for feature in features %}
-            <h2>{{ feature.title }}</h2>
-            <p>{{ feature.description }}</p>
-        {% endfor %}
+        <div style="display: grid; grid-gap: 50px; grid-template-columns: auto auto auto auto auto;">
+            {% for feature in features %}
+                <div style="">
+                    <div class="w3-card-4 w3-round-xlarge" style="width: 250px; min-height: 180px;">
+                        <header class="w3-container w3-blue w3-round-top-xlarge" style="text-align:center">
+                            <h3>{{ feature.title }}</h3>
+                        </header>
+                        <div class="w3-container w3-round-bottom-xlarge" style="text-align:center">
+                            <p>{{ feature.description }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
     </div>
 
 {% endblock %}
