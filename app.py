@@ -9,7 +9,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 from Outh import DiscordOauth2Client, Unauthorized
 
-__version__ = '0.8.0-beta.1'
+__version__ = '0.8.0-beta.2'
 version = __version__
 
 from jinja2 import Template
