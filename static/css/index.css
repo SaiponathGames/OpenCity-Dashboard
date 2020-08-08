@@ -3,5 +3,6 @@
 }
 
 .hover-color-light-blue:hover {
+    color: white !important;
     background-color: darkblue !important;
 }

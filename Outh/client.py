@@ -1,7 +1,9 @@
 import functools
 import os
+from typing import Dict
 
 from flask import redirect, request, session, url_for
+from oauthlib.common import add_params_to_uri
 
 from .base import DISCORD_AUTHORIZATION_BASE_URL
 from .http import AioClient
@@ -16,7 +18,8 @@ class DiscordOauth2Client(AioClient):
         session["DISCORD_OAUTH2_TOKEN"] = None
 
     def callback(self):
-
+        if request.args.get('error'):
+            return redirect(url_for('index'))
         discord = self._make_session()
         # self.MyClient.token_updater(access_token.get('access_token'))
         token = discord.fetch_token(self.token_url, client_secret=self.client_secret, authorization_response=request.url)
@@ -52,10 +55,15 @@ class DiscordOauth2Client(AioClient):
         session.pop('DISCORD_OAUTH2_STATE')
         # print(redirect(url_for('index')))
 
-    def create_session(self):
+    def create_session(self, prompt: bool = False, params: Dict[str, str] = None):
+        if params is None:
+            params = dict()
         if 'http://' in self.redirect_url:
             os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = 'true'
         authorization_url, state = self._make_session().authorization_url(DISCORD_AUTHORIZATION_BASE_URL)
         session['DISCORD_OAUTH2_STATE'] = state
         # print(redirect(self.MyClient._make_session().authorization_url(DISCORD_AUTHORIZATION_BASE_URL)))
+        prompt = 'consent' if prompt else 'none'
+        params.update(prompt=prompt)
+        authorization_url = add_params_to_uri(authorization_url, params)
         return redirect(authorization_url)
